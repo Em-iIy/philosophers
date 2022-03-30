@@ -6,12 +6,13 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 11:23:52 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/03/29 14:21:13 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/03/30 17:09:59 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include <limits.h>
+#include <stdio.h> // remove
 
 static int	ft_isdigit(int c)
 {
@@ -52,11 +53,11 @@ t_input	parsing(int argc, char **argv)
 	ret.n_meals = -2;
 	if (argc == 6)
 		ret.n_meals = ft_atoi(argv[5]);
-	printf("n_philo: %d\n", ret.n_philo);
-	printf("tt_die: %d\n", ret.tt_die);
-	printf("tt_eat: %d\n", ret.tt_eat);
-	printf("tt_sleep: %d\n", ret.tt_sleep);
-	printf("n_meals: %d\n", ret.n_meals);
+	printf("%sn_philo:%s\t%d\n%s", CYAN, PURPLE, ret.n_philo, NORMAL);
+	printf("%stt_die:%s\t\t%d\n%s", CYAN, PURPLE, ret.tt_die, NORMAL);
+	printf("%stt_eat:%s\t\t%d\n%s", CYAN, PURPLE, ret.tt_eat, NORMAL);
+	printf("%stt_sleep:%s\t%d\n%s", CYAN, PURPLE, ret.tt_sleep, NORMAL);
+	printf("%sn_meals:%s\t%d\n%s", CYAN, PURPLE, ret.n_meals, NORMAL);
 	ret.valid = 1;
 	if (ret.n_philo < 0 || ret.tt_die < 0 || ret.tt_eat < 0 || \
 				ret.tt_sleep < 0 || ret.n_meals == -1)
