@@ -11,6 +11,7 @@ BLUE = $(ESC)[0;94m$(BOLD)
 # ---------------------------------------Files
 FILES_SRCS =	philo.c \
 				parsing.c \
+				error_utils.c \
 
 FILES_OBJS = $(FILES_SRCS:.c=.o)
 
