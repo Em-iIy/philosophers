@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 12:22:42 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/03/30 18:35:27 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/03/30 20:52:08 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,19 @@ void	join(t_philo *threads)
 
 void	*routine(void *vars)
 {
-	int	time;
 	t_philo	b;
 	int		a;
 
-	time = 10 + rand() % 10;
 	b = *((t_philo *)vars);
 	a = b.id;
-	printf("%d: Hello from thread\tsleep:%d\n", a, time);
-	for (int i = 0; i < 10000; i++)
-		*b.mails += 1;
-	printf("%d: Bye from thread\tsleep:%d\n", a, time);
+	printf("%d:\tHello from thread\n", a);
+	for (int i = 0; i < b.loops; i++)
+	{
+		pthread_mutex_lock(&b.mails->mutex);
+		b.mails->mails += 1;
+		pthread_mutex_unlock(&b.mails->mutex);
+	}
+	printf("%d:\tBye from thread\n", a);
 	return (vars);
 }
 
@@ -80,11 +82,12 @@ int	main(int argc, char **argv)
 	t_philo		*threads;
 	int			thread_count;
 	int			i;
-	int			mails;
+	t_mails		mails;
 
 	i = 0;
-	mails = 0;
-	if (argc != 2)
+	mails.mails = 0;
+	pthread_mutex_init(&mails.mutex, NULL);
+	if (argc != 3)
 		return (1);
 	thread_count = ft_atoi(1[argv]);
 	threads = (t_philo *)calloc((thread_count + 1), sizeof(t_philo));
@@ -94,6 +97,7 @@ int	main(int argc, char **argv)
 	{
 		threads[i].id = i;
 		threads[i].mails = &mails;
+		threads[i].loops = ft_atoi(2[argv]);
 		if (pthread_create(&threads[i].thread, NULL, &routine, &threads[i]) != 0)
 		{
 			threads[i].thread = NULL;
@@ -102,6 +106,6 @@ int	main(int argc, char **argv)
 		i++;
 	}
 	join(threads);
-	printf("\n%d\n", mails);
+	printf("\n%d\n", mails.mails);
 	return (0);
 }

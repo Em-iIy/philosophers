@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 12:22:40 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/03/30 18:34:13 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/03/30 20:47:53 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ typedef struct s_philo
 {
 	pthread_t	thread;
 	int			id;
-	int			*mails;
+	int			loops;
+	t_mails		*mails;
 }	t_philo;
 
 
