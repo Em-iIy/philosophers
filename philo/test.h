@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 12:22:40 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/03/30 20:47:53 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/03/31 12:44:45 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,5 @@ typedef struct s_philo
 	int			loops;
 	t_mails		*mails;
 }	t_philo;
-
 
 #endif
