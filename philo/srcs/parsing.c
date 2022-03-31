@@ -6,13 +6,12 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 11:23:52 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/03/30 17:09:59 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/03/31 16:04:39 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include <limits.h>
-#include <stdio.h> // remove
 
 static int	ft_isdigit(int c)
 {
