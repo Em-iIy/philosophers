@@ -6,17 +6,28 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 12:22:42 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/03/31 12:44:38 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/04/13 16:14:26 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test.h"
+#include <sys/time.h>
 #include <stdio.h>
 #include <pthread.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <limits.h>
 #include <string.h>
+
+t_flag	create_flag(void)
+{
+	t_flag	ret;
+
+	ret.flag = 0;
+	if (pthread_mutex_init(&ret.mtx, NULL) != 0)
+		ret.flag = 1;
+	return (ret);
+}
 
 static int	ft_isdigit(int c)
 {
@@ -46,6 +57,23 @@ static int	ft_atoi(const char *str)
 	return (ret_int);
 }
 
+unsigned long	get_time(void)
+{
+	struct timeval	t;
+
+	gettimeofday(&t, NULL);
+	return (t.tv_usec + t.tv_sec * 1000000);
+}
+
+void	better_usleep(unsigned long n)
+{
+	unsigned long	start;
+
+	start = get_time();
+	while (n >= get_time() - start)
+		usleep(250);
+}
+
 void	join(t_philo *threads)
 {
 	int	i;
@@ -63,17 +91,59 @@ void	*routine(void *vars)
 {
 	t_philo	b;
 	int		a;
+	struct timeval	t1;
+	struct timeval	t2;
 
 	b = *((t_philo *)vars);
+	// gettimeofday(&t1, NULL);
+	// better_usleep(DELAY);
+	// gettimeofday(&t2, NULL);
+	// printf("ft slept1: %ld usec\n", (t2.tv_usec - t1.tv_usec) + (t2.tv_sec - t1.tv_sec) * 1000000);
+	// gettimeofday(&t1, NULL);
+	// better_usleep(DELAY);
+	// gettimeofday(&t2, NULL);
+	// printf("ft slept2: %ld usec\n", (t2.tv_usec - t1.tv_usec) + (t2.tv_sec - t1.tv_sec) * 1000000);
+	// gettimeofday(&t1, NULL);
+	// usleep(DELAY);
+	// gettimeofday(&t2, NULL);
+	// printf("normal slept1: %ld usec\n", (t2.tv_usec - t1.tv_usec) + (t2.tv_sec - t1.tv_sec) * 1000000);
+	// gettimeofday(&t1, NULL);
+	// usleep(DELAY);
+	// gettimeofday(&t2, NULL);
+	// printf("normal slept2: %ld usec\n", (t2.tv_usec - t1.tv_usec) + (t2.tv_sec - t1.tv_sec) * 1000000);
 	a = b.id;
-	printf("%d:\tHello from thread\n", a);
+	// while (1)
+	// {
+	// 	if (!b.mails->printing.flag)
+	// 	{
+			pthread_mutex_lock(&b.mails->printing.mtx);
+	// 		b.mails->printing.flag++;
+			gettimeofday(&t1, NULL);
+			printf("[%ld]\t%d:\tHello from thread\n",((t1.tv_sec - b.mails->time.tv_sec) * 1000) + ((t1.tv_usec - b.mails->time.tv_usec) / 1000), a);
+			// b.mails->printing.flag--;
+			pthread_mutex_unlock(&b.mails->printing.mtx);
+	// 		break ;
+	// 	}
+	// }
 	for (int i = 0; i < b.loops; i++)
 	{
-		pthread_mutex_lock(&b.mails->mutex);
-		b.mails->mails += 1;
-		pthread_mutex_unlock(&b.mails->mutex);
+		pthread_mutex_lock(&b.mails->mails.mtx);
+		b.mails->mails.flag += 1;
+		pthread_mutex_unlock(&b.mails->mails.mtx);
 	}
-	printf("%d:\tBye from thread\n", a);
+	// while (1)
+	// {
+	// 	if (!b.mails->printing.flag)
+	// 	{
+			pthread_mutex_lock(&b.mails->printing.mtx);
+			// b.mails->printing.flag++;
+			gettimeofday(&t2, NULL);
+			printf("[%ld]\t%d:\tBye from thread\t\t\t(tv_sec diff:%ld)\t(tv_usec diff:%d)\n",((t2.tv_sec - b.mails->time.tv_sec) * 1000) + ((t2.tv_usec - b.mails->time.tv_usec) / 1000), a, t2.tv_sec - b.mails->time.tv_sec, t2.tv_usec - b.mails->time.tv_usec);
+			// b.mails->printing.flag--;
+			pthread_mutex_unlock(&b.mails->printing.mtx);
+	// 		break ;
+	// 	}
+	// }
 	return (vars);
 }
 
@@ -85,14 +155,16 @@ int	main(int argc, char **argv)
 	t_mails		mails;
 
 	i = 0;
-	mails.mails = 0;
-	pthread_mutex_init(&mails.mutex, NULL);
+	mails.mails = create_flag();
+	mails.printing = create_flag();
 	if (argc != 3)
 		return (1);
 	thread_count = ft_atoi(1[argv]);
 	threads = (t_philo *)calloc((thread_count + 1), sizeof(t_philo));
 	if (!threads)
 		return (1);
+	gettimeofday(&mails.time, NULL);
+	printf("time:%ld.%d\n", mails.time.tv_sec, mails.time.tv_usec);
 	while (i < thread_count)
 	{
 		threads[i].id = i;
@@ -106,6 +178,9 @@ int	main(int argc, char **argv)
 		i++;
 	}
 	join(threads);
-	printf("\n%d\n", mails.mails);
+	printf("\n%d\n", mails.mails.flag);
+	gettimeofday(&mails.time, NULL);
+	printf("time:%ld.%d\n", mails.time.tv_sec, mails.time.tv_usec);
+	printf("time:%ld\n", get_time());
 	return (0);
 }

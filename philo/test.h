@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 12:22:40 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/03/31 12:44:45 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/04/07 16:00:26 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,24 @@
 # define TEST_H
 
 # include <pthread.h>
+# include <sys/time.h>
+
+# define DELAY 100000
+
+typedef struct s_flag
+{
+	pthread_mutex_t	mtx;
+	int				flag;
+}	t_flag;
 
 typedef struct s_mails
 {
-	pthread_mutex_t	mutex;
-	int				mails;
+	t_flag			mails;
+	t_flag			printing;
+	struct timeval	time;
+	
 }	t_mails;
+
 
 typedef struct s_philo
 {
@@ -28,5 +40,7 @@ typedef struct s_philo
 	int			loops;
 	t_mails		*mails;
 }	t_philo;
+
+int    ft_usleep(suseconds_t sleep_time);
 
 #endif
