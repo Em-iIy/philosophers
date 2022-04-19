@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:43:38 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/03/31 19:04:51 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/04/18 16:49:43 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	fill_philo(t_philo *philo, t_input input)
 	philo->n_meals = input.n_meals;
 }
 
-t_philo	*init_philos(int n, t_flag *forks, t_flag *has_died, t_input input)
+t_philo	*init_philos(int n, t_table *table, t_input input)
 {
 	t_philo	*ret;
 	int		i;
@@ -34,9 +34,11 @@ t_philo	*init_philos(int n, t_flag *forks, t_flag *has_died, t_input input)
 	while (i < n)
 	{
 		ret[i].id = i + 1;
-		ret[i].fork1 = &forks[i];
-		ret[i].fork2 = &forks[(i + 1) % n];
-		ret[i].has_died = has_died;
+		ret[i].fork1 = &(table->forks[i]);
+		ret[i].fork2 = &(table->forks[(i + 1) % n]);
+		ret[i].has_died = &(table->has_died);
+		ret[i].printing = &(table->printing);
+		ret[i].start_time = &(table->start_time);
 		fill_philo(&ret[i], input);
 		i++;
 	}

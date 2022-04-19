@@ -6,11 +6,26 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 10:48:54 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/03/31 19:05:48 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/04/19 10:12:30 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include "not_libft.h"
+#include <stdlib.h>
+
+void	join(t_philo *threads)
+{
+	int	i;
+
+	i = 0;
+	while (threads[i].thread)
+	{
+		pthread_join(threads[i].thread, NULL);
+		i++;
+	}
+	free(threads);
+}
 
 int	main(int argc, char **argv)
 {
@@ -29,6 +44,11 @@ Usage: ./philo [number of philosophers] [tt. die] [tt. eat] \
 		return (error_msg("error: pthread: init failed\n"));
 	for (i = 0; i < input.n_philo; i++)
 		table.forks[i].flag = i + 1;
-	for (i = 0; i < input.n_philo; i++)
-		printf("philo id:%d\tholds fork %d and %d\n", table.philos[i].id, table.philos[i].fork1->flag, table.philos[i].fork2->flag);
+	join(table.philos);
+	// for (j = 0; j < 100000; j++)
+	// {
+	// for (i = 0; i < input.n_philo; i++)
+	// 	printing(table.philos[i], "has taken a fork\n");
+	// }
+		// printf("philo id:%d\tholds fork %d and %d\n", table.philos[i].id, table.philos[i].fork1->flag, table.philos[i].fork2->flag);
 }

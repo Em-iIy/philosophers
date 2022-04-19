@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 10:48:50 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/03/31 16:04:33 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/04/18 18:09:04 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define NORMAL "\033[0m"
 
 // ----------------------------------------Includes
-# include <stdlib.h>
+# include <stddef.h>
 # include <pthread.h>
 # include <stdio.h> // remove
 
@@ -49,22 +49,26 @@ typedef struct s_flag
 
 typedef struct s_philo
 {
-	int			id;
-	t_flag		*fork1;
-	t_flag		*fork2;
-	t_flag		*has_died;
-	int			tt_die;
-	int			tt_eat;
-	int			tt_sleep;
-	int			n_meals;
-	pthread_t	thread;
+	int				id;
+	t_flag			*fork1;
+	t_flag			*fork2;
+	t_flag			*has_died;
+	t_flag			*printing;
+	unsigned long	*start_time;
+	int				tt_die;
+	int				tt_eat;
+	int				tt_sleep;
+	int				n_meals;
+	pthread_t		thread;
 }	t_philo;
 
 typedef struct s_table
 {
-	t_flag	*forks;
-	t_flag	has_died;
-	t_philo	*philos;
+	t_flag			*forks;
+	t_flag			has_died;
+	t_philo			*philos;
+	t_flag			printing;
+	unsigned long	start_time;
 }	t_table;
 
 // ----------------------------------------Prototypes
@@ -77,11 +81,13 @@ t_input	parsing(int argc, char **argv);
 // ------------------------------Init
 int		init_table(t_table *table, t_input input);
 t_flag	*init_forks(int n);
-t_philo	*init_philos(int n, t_flag *forks, t_flag *has_died, t_input input);
-
+t_philo	*init_philos(int n, t_table *table, t_input input);
 // --------------------Init Utils
-t_flag	create_flag(void);
-void	destroy_flag(t_flag flag);
 void	*clear_forks(t_flag *forks, int n);
+
+// ------------------------------Printing
+int		printing(t_philo philo, const char *msg);
+// ------------------------------Philo routine
+void	*philo_routine(void *vars);
 
 #endif

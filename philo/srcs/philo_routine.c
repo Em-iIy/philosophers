@@ -1,35 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_forks.c                                       :+:      :+:    :+:   */
+/*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/31 13:48:31 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/04/13 15:52:46 by gwinnink         ###   ########.fr       */
+/*   Created: 2022/04/07 16:07:35 by gwinnink          #+#    #+#             */
+/*   Updated: 2022/04/19 10:13:32 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
-#include "flag_utils.h"
-#include <stdlib.h>
 #include <pthread.h>
+#include "philo.h"
+#include "time_utils.h"
 
-t_flag	*init_forks(int n)
+void	*philo_routine(void *vars)
 {
-	t_flag	*ret;
-	int		i;
+	t_philo	philo;
 
-	i = 0;
-	ret = (t_flag *)malloc(n * sizeof(t_flag));
-	if (!ret)
-		return (NULL);
-	while (i < n)
+	philo = *(t_philo *)vars;
+	while (1)
 	{
-		ret[i] = create_flag();
-		if (ret[i].flag == 1)
-			return (clear_forks(ret, n));
-		i++;
+		printing(philo, "has taken a fork\n");
+		printing(philo, "has taken a fork\n");
+		printing(philo, "is eating\n");
+		better_usleep(philo.tt_eat * 1000);
+		printing(philo, "is sleeping\n");
+		better_usleep(philo.tt_sleep * 1000);
+		printing(philo, "is thinking\n");
 	}
-	return (ret);
+	return (NULL);
 }
