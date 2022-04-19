@@ -16,13 +16,22 @@ FILES_SRCS =	philo.c \
 				init_philos.c \
 				init_forks.c \
 				init_utils.c \
+				flag_utils.c \
+				time_utils.c \
+				printing.c \
+				philo_routine.c \
+
+FILES_SRCS +=	ft_itoa.c \
+				ft_strlen.c \
+				ft_strlcpy.c \
 
 FILES_OBJS = $(FILES_SRCS:.c=.o)
 
 # ---------------------------------------Directories
 DIR_SRCS = ./srcs/
 DIR_OBJS = ./objs/
-vpath %.c $(DIR_SRCS)
+DIR_NOT_LIBFT = $(DIR_SRCS)not_libft/
+vpath %.c $(DIR_SRCS) $(DIR_NOT_LIBFT)
 
 #----------------------------------------Sources
 SRCS = $(FILES_SRCS:%=$(DIR_SRCS)%)
@@ -32,13 +41,13 @@ OBJS = $(FILES_OBJS:%=$(DIR_OBJS)%)
 
 #----------------------------------------Flags
 CC = gcc
-# CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 # CFLAGS += -lpthread
 INC = -Iinc
 
 #------------------------------Debug
 CFLAGS += -g
-# CFLAGS += -fsanitize=address
+CFLAGS += -fsanitize=address
 
 #----------------------------------------Making
 all: $(NAME)
