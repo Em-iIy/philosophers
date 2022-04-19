@@ -6,23 +6,14 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:10:54 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/03/31 16:13:03 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/04/13 17:18:03 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include "not_libft.h"
 #include <unistd.h>
 #include <stdlib.h>
-
-static int	ft_strlen(const char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
 
 static char	*s_cpy(char *ret, const char *str)
 {
