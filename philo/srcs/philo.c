@@ -6,12 +6,13 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 10:48:54 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/04/19 10:12:30 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/04/21 14:20:55 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include "not_libft.h"
+#include "time_utils.h"
 #include <stdlib.h>
 
 void	join(t_philo *threads)
@@ -21,7 +22,7 @@ void	join(t_philo *threads)
 	i = 0;
 	while (threads[i].thread)
 	{
-		pthread_join(threads[i].thread, NULL);
+		pthread_join(threads[i].thread, NULL); // error prone
 		i++;
 	}
 	free(threads);
@@ -45,10 +46,4 @@ Usage: ./philo [number of philosophers] [tt. die] [tt. eat] \
 	for (i = 0; i < input.n_philo; i++)
 		table.forks[i].flag = i + 1;
 	join(table.philos);
-	// for (j = 0; j < 100000; j++)
-	// {
-	// for (i = 0; i < input.n_philo; i++)
-	// 	printing(table.philos[i], "has taken a fork\n");
-	// }
-		// printf("philo id:%d\tholds fork %d and %d\n", table.philos[i].id, table.philos[i].fork1->flag, table.philos[i].fork2->flag);
 }
