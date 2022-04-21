@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 14:02:32 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/04/12 14:11:22 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/04/21 15:33:05 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,5 @@ void	better_usleep(unsigned long n)
 
 	start = get_time();
 	while (n >= get_time() - start)
-		usleep(100);
+		usleep(250);
 }

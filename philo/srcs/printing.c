@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:45:48 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/04/19 10:17:29 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/04/21 15:33:37 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,41 +17,57 @@
 #include <stdlib.h>
 #include <pthread.h>
 
-static int	itoa_cpy(char *origin, char *str, int n1, int n2)
+static char	*itoa_cpy(char *str, int n)
 {
 	char	*num;
-	int		len;
+	int		i;
 
-	num = ft_itoa(n1);
+	num = ft_itoa(n);
 	if (!num)
+		return (NULL);
+	i = 0;
+	while (num[i])
 	{
-		free(origin);
-		return (0);
+		*str = num[i];
+		str++;
+		i++;
 	}
-	len = ft_strlcpy(str, num, ft_strlen(num) + 1) + 1;
-	str[len - 1] = ' ';
 	free(num);
-	num = ft_itoa(n2);
-	if (!num)
-	{
-		free(origin);
-		return (0);
-	}
-	len += ft_strlcpy(str + len, num, ft_strlen(num) + 1) + 1;
-	str[len - 1] = ' ';
-	free(num);
-	return (len);
+	*str = ' ';
+	str++;
+	*str = 0;
+	return (str);
 }
 
-int	printing(t_philo philo, const char *msg)
+static char	*fill_num(char *origin, char *str, int n1, int n2)
 {
-	char	*print_str;
-	char	*ptr;
-	int		len;
-	int		msg_len;
+	str = itoa_cpy(str, n1);
+	if (!str)
+	{
+		free(origin);
+		return (NULL);
+	}
+	str = itoa_cpy(str, n2);
+	if (!str)
+	{
+		free(origin);
+		return (NULL);
+	}
+	return (str);
+}
 
-	len = 0;
-	print_str = (char *)malloc(44 * sizeof(char));
+unsigned long	printing(t_philo philo, unsigned long *eat, \
+							const char *msg, int dead)
+{
+	char				*print_str;
+	char				*ptr;
+	unsigned long		time;
+	int					msg_len;
+
+	time = get_time();
+	if (eat)
+		*eat = time;
+	print_str = (char *)ft_calloc(44, sizeof(char));
 	if (!print_str)
 		return (0);
 	ptr = print_str;
@@ -59,14 +75,17 @@ int	printing(t_philo philo, const char *msg)
 	ptr += ft_strlcpy(print_str, RED, 9);
 	print_str[5] = ((philo.id % 7) + 1) + '0';
 	pthread_mutex_lock(&(philo.printing->mtx));
-	len = itoa_cpy(print_str, ptr, (get_time() - *philo.start_time) / 1000, \
+	time = get_time();
+	if (eat)
+		*eat = time;
+	ptr = fill_num(print_str, ptr, (time - *philo.start_time) / 1000, \
 					philo.id);
-	if (!len)
+	if (!ptr)
 		return (0);
-	ptr += len;
-	len += ft_strlcpy(ptr, msg, msg_len + 1);
-	write(1, print_str, ft_strlen(print_str));
+	ft_strlcpy(ptr, msg, msg_len + 1);
+	if (!philo.has_died->flag || dead)
+		write(1, print_str, ft_strlen(print_str));
 	pthread_mutex_unlock(&(philo.printing->mtx));
 	free(print_str);
-	return (1);
+	return (time);
 }
