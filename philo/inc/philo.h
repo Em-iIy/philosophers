@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 10:48:50 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/04/18 18:09:04 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/04/21 14:29:15 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_philo
 	t_flag			*has_died;
 	t_flag			*printing;
 	unsigned long	*start_time;
+	unsigned long	*last_meal;
 	int				tt_die;
 	int				tt_eat;
 	int				tt_sleep;
@@ -73,21 +74,23 @@ typedef struct s_table
 
 // ----------------------------------------Prototypes
 // ------------------------------Error exit
-int		error_msg(const char *msg);
+int				error_msg(const char *msg);
 
 // ------------------------------Parsing
-t_input	parsing(int argc, char **argv);
+t_input			parsing(int argc, char **argv);
 
 // ------------------------------Init
-int		init_table(t_table *table, t_input input);
-t_flag	*init_forks(int n);
-t_philo	*init_philos(int n, t_table *table, t_input input);
+int				init_table(t_table *table, t_input input);
+t_flag			*init_forks(int n);
+t_philo			*init_philos(int n, t_table *table, t_input input);
 // --------------------Init Utils
-void	*clear_forks(t_flag *forks, int n);
+void			*clear_forks(t_flag *forks, int n);
 
 // ------------------------------Printing
-int		printing(t_philo philo, const char *msg);
+unsigned long	printing(t_philo philo, unsigned long *eat, \
+							const char *msg, int dead);
 // ------------------------------Philo routine
-void	*philo_routine(void *vars);
+void			*philo_routine(void *vars);
+void			*philo_monitor(void *vars);
 
 #endif
