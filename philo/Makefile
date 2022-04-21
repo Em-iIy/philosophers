@@ -20,10 +20,12 @@ FILES_SRCS =	philo.c \
 				time_utils.c \
 				printing.c \
 				philo_routine.c \
+				philo_monitor.c \
 
 FILES_SRCS +=	ft_itoa.c \
 				ft_strlen.c \
 				ft_strlcpy.c \
+				ft_calloc.c \
 
 FILES_OBJS = $(FILES_SRCS:.c=.o)
 
@@ -41,13 +43,13 @@ OBJS = $(FILES_OBJS:%=$(DIR_OBJS)%)
 
 #----------------------------------------Flags
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -O2
 # CFLAGS += -lpthread
 INC = -Iinc
 
 #------------------------------Debug
-CFLAGS += -g
-CFLAGS += -fsanitize=address
+# CFLAGS += -g
+# CFLAGS += -fsanitize=address
 
 #----------------------------------------Making
 all: $(NAME)
