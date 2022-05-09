@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 10:48:50 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/04/21 14:29:15 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/09 18:39:43 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 
 // ----------------------------------------Includes
 # include <stddef.h>
+# include <stdint.h>
 # include <pthread.h>
 # include <stdio.h> // remove
 
@@ -49,27 +50,27 @@ typedef struct s_flag
 
 typedef struct s_philo
 {
-	int				id;
-	t_flag			*fork1;
-	t_flag			*fork2;
-	t_flag			*has_died;
-	t_flag			*printing;
-	unsigned long	*start_time;
-	unsigned long	*last_meal;
-	int				tt_die;
-	int				tt_eat;
-	int				tt_sleep;
-	int				n_meals;
-	pthread_t		thread;
+	int			id;
+	t_flag		*fork1;
+	t_flag		*fork2;
+	t_flag		*has_died;
+	t_flag		*printing;
+	uint64_t	*start_time;
+	uint64_t	*last_meal;
+	int			tt_die;
+	int			tt_eat;
+	int			tt_sleep;
+	int			n_meals;
+	pthread_t	thread;
 }	t_philo;
 
 typedef struct s_table
 {
-	t_flag			*forks;
-	t_flag			has_died;
-	t_philo			*philos;
-	t_flag			printing;
-	unsigned long	start_time;
+	t_flag		*forks;
+	t_flag		has_died;
+	t_philo		*philos;
+	t_flag		printing;
+	uint64_t	start_time;
 }	t_table;
 
 // ----------------------------------------Prototypes
@@ -87,7 +88,7 @@ t_philo			*init_philos(int n, t_table *table, t_input input);
 void			*clear_forks(t_flag *forks, int n);
 
 // ------------------------------Printing
-unsigned long	printing(t_philo philo, unsigned long *eat, \
+uint64_t		printing(t_philo philo, uint64_t *eat, \
 							const char *msg, int dead);
 // ------------------------------Philo routine
 void			*philo_routine(void *vars);

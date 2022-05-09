@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 14:25:58 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/04/12 14:27:11 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/09 18:46:25 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define TIME_UTILS_H
 
 // ----------------------------------------Prototypes
-unsigned long	get_time(void);
-void			better_usleep(unsigned long n);
+uint64_t	get_time(void);
+void		better_usleep(uint64_t n);
 
 #endif

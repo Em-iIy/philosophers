@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:45:48 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/04/21 15:33:37 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/09 18:43:22 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,13 @@ static char	*fill_num(char *origin, char *str, int n1, int n2)
 	return (str);
 }
 
-unsigned long	printing(t_philo philo, unsigned long *eat, \
+uint64_t	printing(t_philo philo, uint64_t *eat, \
 							const char *msg, int dead)
 {
-	char				*print_str;
-	char				*ptr;
-	unsigned long		time;
-	int					msg_len;
+	char		*print_str;
+	char		*ptr;
+	uint64_t	time;
+	int			msg_len;
 
 	time = get_time();
 	if (eat)
@@ -84,7 +84,7 @@ unsigned long	printing(t_philo philo, unsigned long *eat, \
 		return (0);
 	ft_strlcpy(ptr, msg, msg_len + 1);
 	if (!philo.has_died->flag || dead)
-		write(1, print_str, ft_strlen(print_str));
+		write(1, print_str, 44);
 	pthread_mutex_unlock(&(philo.printing->mtx));
 	free(print_str);
 	return (time);
