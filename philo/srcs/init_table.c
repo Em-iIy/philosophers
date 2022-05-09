@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:29:49 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/04/20 16:30:09 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/09 18:13:21 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	init_table(t_table *table, t_input input)
 		clear_forks(table->forks, input.n_philo);
 		return (-1);
 	}
-	table->start_time = 0;
 	while (i < input.n_philo)
 	{
 		if (pthread_create(&table->philos[i].thread, NULL, &philo_routine, \
