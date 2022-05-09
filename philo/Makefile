@@ -48,8 +48,8 @@ CFLAGS = -Wall -Wextra -Werror -O2
 INC = -Iinc
 
 #------------------------------Debug
-# CFLAGS += -g
-# CFLAGS += -fsanitize=address
+# CFLAGS += -g -fsanitize=address
+# CFLAGS += -fsanitize=thread
 
 #----------------------------------------Making
 all: $(NAME)
