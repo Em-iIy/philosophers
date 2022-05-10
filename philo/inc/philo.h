@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 10:48:50 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/09 18:39:43 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:16:23 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 // ----------------------------------------Includes
 # include <stddef.h>
 # include <stdint.h>
+# include <stdbool.h>
 # include <pthread.h>
 # include <stdio.h> // remove
 
@@ -55,8 +56,9 @@ typedef struct s_philo
 	t_flag		*fork2;
 	t_flag		*has_died;
 	t_flag		*printing;
-	uint64_t	*start_time;
+	t_flag		lm_flag;
 	uint64_t	*last_meal;
+	uint64_t	*start_time;
 	int			tt_die;
 	int			tt_eat;
 	int			tt_sleep;
@@ -87,11 +89,15 @@ t_philo			*init_philos(int n, t_table *table, t_input input);
 // --------------------Init Utils
 void			*clear_forks(t_flag *forks, int n);
 
-// ------------------------------Printing
-uint64_t		printing(t_philo philo, uint64_t *eat, \
-							const char *msg, int dead);
 // ------------------------------Philo routine
 void			*philo_routine(void *vars);
 void			*philo_monitor(void *vars);
+
+// ------------------------------Philo state
+bool			grab_fork(t_philo philo, t_flag fork);
+bool			eat(t_philo philo);
+bool			philo_sleep(t_philo philo);
+bool			think(t_philo philo);
+bool			die(t_philo philo);
 
 #endif

@@ -6,52 +6,59 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 16:07:35 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/09 18:44:17 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/10 19:18:33 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pthread.h>
 #include "philo.h"
 #include "time_utils.h"
+#include "flag_utils.h"
+#include "printing_utils.h"
+#include <pthread.h>
 #include <unistd.h>
+#include <stdbool.h>
 
-static int	philo_routine_even(t_philo *philo)
+static void	philo_routine_even(t_philo philo)
 {
 	usleep(250);
-	while (!philo->has_died->flag)
+	while (check_flag(philo.has_died))
 	{
-		pthread_mutex_lock(&(philo->fork1->mtx));
-		printing(*philo, NULL, "has taken a fork\n", 0); // error prone
-		pthread_mutex_lock(&(philo->fork2->mtx));
-		printing(*philo, NULL, "has taken a fork\n", 0); // error prone
-		printing(*philo, philo->last_meal, "is eating\n", 0); // error prone
-		better_usleep(philo->tt_eat * 1000);
-		pthread_mutex_unlock(&(philo->fork1->mtx));
-		pthread_mutex_unlock(&(philo->fork2->mtx));
-		printing(*philo, NULL, "is sleeping\n", 0); // error prone
-		better_usleep(philo->tt_sleep * 1000);
-		printing(*philo, NULL, "is thinking\n", 0); // error prone
+		if (grab_fork(philo, *philo.fork1) != true)
+			return ;
+		if (grab_fork(philo, *philo.fork2) != true)
+			return ;
+		if (eat(philo) != true)
+			return ;
+		if (pthread_mutex_unlock(&philo.fork1->mtx) != 0)
+			return ;
+		if (pthread_mutex_unlock(&philo.fork2->mtx) != 0)
+			return ;
+		if (philo_sleep(philo) != true)
+			return ;
+		if (think(philo) != true)
+			return ;
 	}
-	return (0);
 }
 
-static int	philo_routine_odd(t_philo *philo)
+static void	philo_routine_odd(t_philo philo)
 {
-	while (!philo->has_died->flag)
+	while (check_flag(philo.has_died))
 	{
-		pthread_mutex_lock(&(philo->fork2->mtx));
-		printing(*philo, NULL, "has taken a fork\n", 0); // error prone
-		pthread_mutex_lock(&(philo->fork1->mtx));
-		printing(*philo, NULL, "has taken a fork\n", 0); // error prone
-		printing(*philo, philo->last_meal, "is eating\n", 0); // error prone
-		better_usleep(philo->tt_eat * 1000);
-		pthread_mutex_unlock(&(philo->fork2->mtx));
-		pthread_mutex_unlock(&(philo->fork1->mtx));
-		printing(*philo, NULL, "is sleeping\n", 0); // error prone
-		better_usleep(philo->tt_sleep * 1000);
-		printing(*philo, NULL, "is thinking\n", 0); // error prone
+		if (grab_fork(philo, *philo.fork2) != true)
+			return ;
+		if (grab_fork(philo, *philo.fork1) != true)
+			return ;
+		if (eat(philo) != true)
+			return ;
+		if (pthread_mutex_unlock(&philo.fork2->mtx) != 0)
+			return ;
+		if (pthread_mutex_unlock(&philo.fork1->mtx) != 0)
+			return ;
+		if (philo_sleep(philo) != true)
+			return ;
+		if (think(philo) != true)
+			return ;
 	}
-	return (0);
 }
 
 void	*philo_routine(void *vars)
@@ -68,9 +75,9 @@ void	*philo_routine(void *vars)
 	while (*philo.start_time == 0)
 		usleep(100);
 	if (philo.id & 1)
-		philo_routine_odd(&philo);
+		philo_routine_odd(philo);
 	else
-		philo_routine_even(&philo);
+		philo_routine_even(philo);
 	pthread_join(monitor, NULL);
 	return (NULL);
 }
