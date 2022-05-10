@@ -18,9 +18,10 @@ FILES_SRCS =	philo.c \
 				init_utils.c \
 				flag_utils.c \
 				time_utils.c \
-				printing.c \
+				printing_utils.c \
 				philo_routine.c \
 				philo_monitor.c \
+				philo_state.c \
 
 FILES_SRCS +=	ft_itoa.c \
 				ft_strlen.c \
@@ -49,10 +50,11 @@ INC = -Iinc
 
 #------------------------------Debug
 # CFLAGS += -g -fsanitize=address
-# CFLAGS += -fsanitize=thread
+CFLAGS += -g -fsanitize=thread
 
 #----------------------------------------Making
 all: $(NAME)
+	@echo "$(BLUE)----------------------------------------------------------------------------------------------------------------------------------------------------------------------$(NORMAL)"
 
 $(NAME): $(DIR_OBJS) $(OBJS)
 	@$(CC) $(CFLAGS) $(INC) $(OBJS) -o $(NAME)
