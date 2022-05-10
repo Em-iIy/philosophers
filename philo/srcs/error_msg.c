@@ -6,12 +6,13 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:10:54 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/04/13 17:18:03 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/10 13:33:47 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include "not_libft.h"
+#include <pthread.h>
 #include <unistd.h>
 #include <stdlib.h>
 
@@ -60,3 +61,7 @@ int	error_msg(const char *msg)
 	write(2, temp, ft_strlen(temp));
 	return (1);
 }
+
+// void	func_error(t_philo philo, const char *msg)
+// {
+// }
