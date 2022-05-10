@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 16:15:26 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/04/13 15:53:09 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/10 16:41:30 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 
 // ----------------------------------------Prototypes
 t_flag	create_flag(void);
-void	lock_flag(t_flag *flag);
-void	unlock_flag(t_flag *flag);
 void	destroy_flag(t_flag *flag);
+bool	check_flag(t_flag *flag);
+bool	flip_flag(t_flag *flag);
 
 #endif

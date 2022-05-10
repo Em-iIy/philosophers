@@ -6,12 +6,13 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 16:16:31 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/04/13 15:50:49 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/10 16:41:27 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include <pthread.h>
+#include <stdbool.h>
 
 t_flag	create_flag(void)
 {
@@ -23,24 +24,36 @@ t_flag	create_flag(void)
 	return (ret);
 }
 
-void	lock_flag(t_flag *flag)
-{
-	if (flag->flag)
-		return ;
-	pthread_mutex_lock(&(flag->mtx));
-	flag->flag = 1;
-}
-
-void	unlock_flag(t_flag *flag)
-{
-	if (!(flag->flag))
-		return ;
-	pthread_mutex_unlock(&(flag->mtx));
-	flag->flag = 0;
-}
-
 void	destroy_flag(t_flag *flag)
 {
 	if (flag->flag == 0)
 		pthread_mutex_destroy(&(flag->mtx));
+}
+
+bool	check_flag(t_flag *flag)
+{
+	bool	ret;
+
+	if (pthread_mutex_lock(&flag->mtx) != 0)
+		return (false);
+	if (!flag->flag)
+		ret = true;
+	else
+		ret = false;
+	if (pthread_mutex_unlock(&flag->mtx) != 0)
+		return (false);
+	return (ret);
+}
+
+bool	flip_flag(t_flag *flag)
+{
+	if (pthread_mutex_lock(&flag->mtx) != 0)
+		return (false);
+	if (!flag->flag)
+		flag->flag = 1;
+	else
+		flag->flag = 0;
+	if (pthread_mutex_unlock(&flag->mtx) != 0)
+		return (false);
+	return (true);
 }
