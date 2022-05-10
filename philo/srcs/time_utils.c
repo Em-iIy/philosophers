@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 14:02:32 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/09 18:42:12 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/10 16:02:53 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ uint64_t	get_time(void)
 {
 	struct timeval	t;
 
-	gettimeofday(&t, NULL);
+	if (gettimeofday(&t, NULL) == -1)
+		return (0);
 	return (t.tv_usec + t.tv_sec * 1000000);
 }
 

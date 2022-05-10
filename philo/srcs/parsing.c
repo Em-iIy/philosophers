@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 11:23:52 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/04/18 16:18:44 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/10 16:07:54 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,6 @@ t_input	parsing(int argc, char **argv)
 	ret.n_meals = -2;
 	if (argc == 6)
 		ret.n_meals = ft_atoi(argv[5]);
-	// printf("%sn_philo:%s\t%d\n%s", CYAN, PURPLE, ret.n_philo, NORMAL);
-	// printf("%stt_die:%s\t\t%d\n%s", CYAN, PURPLE, ret.tt_die, NORMAL);
-	// printf("%stt_eat:%s\t\t%d\n%s", CYAN, PURPLE, ret.tt_eat, NORMAL);
-	// printf("%stt_sleep:%s\t%d\n%s", CYAN, PURPLE, ret.tt_sleep, NORMAL);
-	// printf("%sn_meals:%s\t%d\n%s", CYAN, PURPLE, ret.n_meals, NORMAL);
 	ret.valid = 1;
 	if (ret.n_philo < 0 || ret.tt_die < 0 || ret.tt_eat < 0 || \
 				ret.tt_sleep < 0 || ret.n_meals == -1)

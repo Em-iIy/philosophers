@@ -6,12 +6,13 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:43:38 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/04/21 13:45:06 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/10 16:06:57 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include "not_libft.h"
+#include "flag_utils.h"
 #include <stdlib.h>
 #include <pthread.h>
 
@@ -41,6 +42,12 @@ t_philo	*init_philos(int n, t_table *table, t_input input)
 		ret[i].printing = &(table->printing);
 		ret[i].start_time = &(table->start_time);
 		ret[i].last_meal = 0;
+		ret[i].lm_flag = create_flag();
+		if (ret[i].lm_flag.flag == 1)
+		{
+			free(ret);
+			return (NULL);
+		}
 		fill_philo(&ret[i], input);
 		i++;
 	}
