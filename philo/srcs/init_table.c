@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:29:49 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/09 18:13:21 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/11 17:33:15 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	init_table(t_table *table, t_input input)
 		i++;
 	}
 	usleep(1000000);
+	pthread_mutex_lock(&table->printing.mtx);
 	table->start_time = get_time();
+	pthread_mutex_unlock(&table->printing.mtx);
 	return (0);
 }
