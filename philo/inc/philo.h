@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 10:48:50 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/10 17:16:23 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/11 14:59:09 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,10 @@ void			*philo_routine(void *vars);
 void			*philo_monitor(void *vars);
 
 // ------------------------------Philo state
-bool			grab_fork(t_philo philo, t_flag fork);
-bool			eat(t_philo philo);
-bool			philo_sleep(t_philo philo);
-bool			think(t_philo philo);
-bool			die(t_philo philo);
+bool			grab_fork(t_philo *philo, t_flag *fork);
+bool			eat(t_philo *philo);
+bool			philo_sleep(t_philo *philo);
+bool			think(t_philo *philo);
+bool			die(t_philo *philo);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 12:02:25 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/10 12:25:33 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/11 15:02:18 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,6 @@
 # include <stdbool.h>
 
 // ----------------------------------------Prototypes
-bool			printing(t_philo philo, int eat, const char *msg);
+bool			printing(t_philo *philo, int eat, const char *msg);
 
 #endif

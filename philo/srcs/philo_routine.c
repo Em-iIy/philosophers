@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 16:07:35 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/10 19:18:33 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/11 17:39:16 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,20 @@
 #include <unistd.h>
 #include <stdbool.h>
 
-static void	philo_routine_even(t_philo philo)
+static void	philo_routine_even(t_philo *philo)
 {
 	usleep(250);
-	while (check_flag(philo.has_died))
+	while (check_flag(philo->has_died))
 	{
-		if (grab_fork(philo, *philo.fork1) != true)
+		if (grab_fork(philo, philo->fork1) != true)
 			return ;
-		if (grab_fork(philo, *philo.fork2) != true)
+		if (grab_fork(philo, philo->fork2) != true)
 			return ;
 		if (eat(philo) != true)
 			return ;
-		if (pthread_mutex_unlock(&philo.fork1->mtx) != 0)
+		if (pthread_mutex_unlock(&philo->fork1->mtx) != 0)
 			return ;
-		if (pthread_mutex_unlock(&philo.fork2->mtx) != 0)
+		if (pthread_mutex_unlock(&philo->fork2->mtx) != 0)
 			return ;
 		if (philo_sleep(philo) != true)
 			return ;
@@ -40,19 +40,19 @@ static void	philo_routine_even(t_philo philo)
 	}
 }
 
-static void	philo_routine_odd(t_philo philo)
+static void	philo_routine_odd(t_philo *philo)
 {
-	while (check_flag(philo.has_died))
+	while (check_flag(philo->has_died))
 	{
-		if (grab_fork(philo, *philo.fork2) != true)
+		if (grab_fork(philo, philo->fork2) != true)
 			return ;
-		if (grab_fork(philo, *philo.fork1) != true)
+		if (grab_fork(philo, philo->fork1) != true)
 			return ;
 		if (eat(philo) != true)
 			return ;
-		if (pthread_mutex_unlock(&philo.fork2->mtx) != 0)
+		if (pthread_mutex_unlock(&philo->fork1->mtx) != 0)
 			return ;
-		if (pthread_mutex_unlock(&philo.fork1->mtx) != 0)
+		if (pthread_mutex_unlock(&philo->fork2->mtx) != 0)
 			return ;
 		if (philo_sleep(philo) != true)
 			return ;
@@ -72,12 +72,13 @@ void	*philo_routine(void *vars)
 	philo.last_meal = &last_meal;
 	if (pthread_create(&monitor, NULL, &philo_monitor, (void *)&philo) != 0)
 		return (NULL);
-	while (*philo.start_time == 0)
-		usleep(100);
+	while (!check_time_stamp(&philo.printing->mtx, philo.start_time))
+		usleep(200);
 	if (philo.id & 1)
-		philo_routine_odd(philo);
+		philo_routine_odd(&philo);
 	else
-		philo_routine_even(philo);
-	pthread_join(monitor, NULL);
+		philo_routine_even(&philo);
+	if (pthread_join(monitor, NULL) != 0)
+		printf("monitor %d joined\n", philo.id);
 	return (NULL);
 }
