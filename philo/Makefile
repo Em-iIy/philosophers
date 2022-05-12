@@ -50,7 +50,7 @@ INC = -Iinc
 
 #------------------------------Debug
 # CFLAGS += -g -fsanitize=address
-CFLAGS += -g -fsanitize=thread
+# CFLAGS += -g -fsanitize=thread
 
 #----------------------------------------Making
 all: $(NAME)

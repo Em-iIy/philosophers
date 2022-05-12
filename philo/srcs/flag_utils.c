@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 16:16:31 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/10 16:41:27 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/12 18:53:15 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ bool	check_flag(t_flag *flag)
 {
 	bool	ret;
 
+	// DEBUG(0, "trylock");
 	if (pthread_mutex_lock(&flag->mtx) != 0)
+	// DEBUG(0, "lock");
 		return (false);
 	if (!flag->flag)
 		ret = true;
@@ -42,6 +44,7 @@ bool	check_flag(t_flag *flag)
 		ret = false;
 	if (pthread_mutex_unlock(&flag->mtx) != 0)
 		return (false);
+	// DEBUG(0, "unlock");
 	return (ret);
 }
 
