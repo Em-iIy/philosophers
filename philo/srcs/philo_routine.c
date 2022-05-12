@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 16:07:35 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/11 17:39:16 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/12 20:19:20 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 static void	philo_routine_even(t_philo *philo)
 {
-	usleep(250);
+	usleep(2000);
 	while (check_flag(philo->has_died))
 	{
 		if (grab_fork(philo, philo->fork1) != true)
@@ -70,15 +70,16 @@ void	*philo_routine(void *vars)
 	philo = *(t_philo *)vars;
 	last_meal = 0;
 	philo.last_meal = &last_meal;
-	if (pthread_create(&monitor, NULL, &philo_monitor, (void *)&philo) != 0)
-		return (NULL);
 	while (!check_time_stamp(&philo.printing->mtx, philo.start_time))
 		usleep(200);
+	if (pthread_create(&monitor, NULL, &philo_monitor, (void *)&philo) != 0)
+		return (NULL);
 	if (philo.id & 1)
 		philo_routine_odd(&philo);
 	else
 		philo_routine_even(&philo);
+	DEBUG(philo.id, "routine done");
 	if (pthread_join(monitor, NULL) != 0)
-		printf("monitor %d joined\n", philo.id);
+		return (NULL);
 	return (NULL);
 }
