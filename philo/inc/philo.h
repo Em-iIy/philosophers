@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 10:48:50 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/12 20:27:57 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/16 15:39:48 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define CYAN "\033[0;96m"
 # define WHITE "\033[0;97m"
 # define NORMAL "\033[0m"
-# define DEBUG(id,msg) printf("\033[0m%s:%d    \t%-17sphilo %d:\t%-40s\033[0m\n", __FILE__, __LINE__, __func__, id, msg)
+// # define DEBUG(id,msg) printf("\033[0m%s:%d    \t%-17sphilo %d:\t%-40s\033[0m\n", __FILE__, __LINE__, __func__, id, msg)
 # ifndef DEBUG
 #  define DEBUG(id,msg)
 # endif
