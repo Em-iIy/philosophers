@@ -43,5 +43,5 @@ void	better_usleep(uint64_t n)
 
 	start = get_time();
 	while (n >= get_time() - start)
-		usleep(250);
+		usleep(300);
 }
