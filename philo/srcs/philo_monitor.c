@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:52:49 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/12 20:08:27 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/16 16:34:15 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,15 @@ void	*philo_monitor(void *vars)
 
 	philo = (t_philo *)vars;
 	tt_die = (uint64_t) philo->tt_die;
-	while (check_flag(philo->has_died))
+	while (check_flag(philo->has_died) && philo->n_meals)
 	{
 		if (!check_hunger(philo, tt_die))
 		{
-			DEBUG(philo->id, "\033[0mpre die");
 			if (!die(philo))
-			{
-				DEBUG(philo->id, "\033[0mdead");
 				return (NULL);
-			}
-			DEBUG(philo->id, "\033[0mpost die");
 			return (NULL);
 		}
-		usleep(200);
+		usleep(500);
 	}
 	return (NULL);
 }
