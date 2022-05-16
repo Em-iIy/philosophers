@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:45:48 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/12 17:44:47 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/16 16:37:49 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,9 @@ bool	printing(t_philo *philo, int eat, const char *msg)
 			(time - *philo->start_time) / 1000, philo->id, msg);
 		return (true);
 	}
+	if (pthread_mutex_unlock(&philo->fork1->mtx) != 0)
+		return (false);
+	if (pthread_mutex_unlock(&philo->fork2->mtx) != 0)
+		return (false);
 	return (false);
 }
