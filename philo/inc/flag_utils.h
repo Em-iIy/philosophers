@@ -20,5 +20,6 @@ t_flag	create_flag(void);
 void	destroy_flag(t_flag *flag);
 bool	check_flag(t_flag *flag);
 bool	flip_flag(t_flag *flag);
+bool	decrement_flag(t_flag *flag);
 
 #endif
