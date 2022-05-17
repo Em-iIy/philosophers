@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 16:07:35 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/16 16:19:13 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/17 15:15:02 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 static bool	philo_routine_even(t_philo *philo)
 {
 	usleep(2000);
-	while (check_flag(philo->has_died) && philo->n_meals)
+	while (check_flag(philo->has_died) && !check_flag(&philo->n_meals))
 	{
 		if (grab_fork(philo, philo->fork1) != true)
 			return (false);
@@ -33,14 +33,14 @@ static bool	philo_routine_even(t_philo *philo)
 			return (false);
 		if (think(philo) != true)
 			return (false);
-		philo->n_meals--;
+		decrement_flag(&philo->n_meals);
 	}
 	return (true);
 }
 
 static bool	philo_routine_odd(t_philo *philo)
 {
-	while (check_flag(philo->has_died) && philo->n_meals)
+	while (check_flag(philo->has_died) && !check_flag(&philo->n_meals))
 	{
 		if (grab_fork(philo, philo->fork2) != true)
 			return (false);
@@ -52,32 +52,27 @@ static bool	philo_routine_odd(t_philo *philo)
 			return (false);
 		if (think(philo) != true)
 			return (false);
-		philo->n_meals--;
+		decrement_flag(&philo->n_meals);
 	}
 	return (true);
 }
 
 void	*philo_routine(void *vars)
 {
-	t_philo		philo;
-	pthread_t	monitor;
+	t_philo		*philo;
 	uint64_t	last_meal;
 	bool		done_eating;
 
-	philo = *(t_philo *)vars;
+	philo = (t_philo *)vars;
 	last_meal = 0;
-	philo.last_meal = &last_meal;
-	while (!check_time_stamp(&philo.printing->mtx, philo.start_time))
+	philo->last_meal = &last_meal;
+	while (!check_time_stamp(&philo->printing->mtx, philo->start_time))
 		usleep(200);
-	if (pthread_create(&monitor, NULL, &philo_monitor, (void *)&philo) != 0)
-		return (NULL);
-	if (philo.id & 1)
-		done_eating = philo_routine_odd(&philo);
+	if (philo->id & 1)
+		done_eating = philo_routine_odd(philo);
 	else
-		done_eating = philo_routine_even(&philo);
-	// if (done_eating)
-	// 	pthread_detach(monitor);
-	if (pthread_join(monitor, NULL) != 0)
-		return (NULL);
+		done_eating = philo_routine_even(philo);
+	if (done_eating)
+		decrement_flag(philo->done_eating);
 	return (NULL);
 }

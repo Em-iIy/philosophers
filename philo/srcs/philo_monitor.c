@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:52:49 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/16 16:34:15 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/17 15:27:39 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static bool	check_hunger(t_philo *philo, uint64_t tt_die)
 {
 	uint64_t	lm;
 
+	if (check_flag(&philo->n_meals))
+		return (true);
 	lm = check_time_stamp(&philo->lm_flag.mtx, philo->last_meal);
 	if (!lm)
 	{
@@ -43,7 +45,7 @@ void	*philo_monitor(void *vars)
 
 	philo = (t_philo *)vars;
 	tt_die = (uint64_t) philo->tt_die;
-	while (check_flag(philo->has_died) && philo->n_meals)
+	while (check_flag(philo->has_died) && !check_flag(&philo->n_meals))
 	{
 		if (!check_hunger(philo, tt_die))
 		{
@@ -51,7 +53,33 @@ void	*philo_monitor(void *vars)
 				return (NULL);
 			return (NULL);
 		}
-		usleep(500);
+		usleep(1000);
+	}
+	return (NULL);
+}
+
+void	*single_philo_monitor(void *vars)
+{
+	t_table		*table;
+	uint64_t	tt_die;
+	int			i;
+
+	table = (t_table *)vars;
+	tt_die = (uint64_t) table->tt_die;
+	while (check_flag(&table->has_died) && !check_flag(&table->done_eating))
+	{
+		i = 0;
+		while (i < table->n_philo)
+		{
+			if (!check_hunger(&table->philos[i], tt_die))
+			{
+				if (!die(&table->philos[i]))
+					return (NULL);
+				return (NULL);
+			}
+			usleep(200);
+			i++;
+		}
 	}
 	return (NULL);
 }
