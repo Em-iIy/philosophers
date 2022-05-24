@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:52:49 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/17 15:27:39 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/24 12:57:41 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,12 @@ void	*single_philo_monitor(void *vars)
 			if (!check_hunger(&table->philos[i], tt_die))
 			{
 				if (!die(&table->philos[i]))
-					return (NULL);
+					func_error(&table->philos[i], "death error\n");
 				return (NULL);
 			}
-			usleep(200);
 			i++;
 		}
+		usleep(500);
 	}
 	return (NULL);
 }

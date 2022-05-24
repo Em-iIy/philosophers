@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 10:48:54 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/09 18:45:18 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/24 13:21:32 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	join(t_philo *threads)
 	i = 0;
 	while (threads[i].thread)
 	{
-		pthread_join(threads[i].thread, NULL); // error prone
+		if (pthread_join(threads[i].thread, NULL) != 0)
+			error_msg("error: pthread: join failed\n");
 		i++;
 	}
 	free(threads);

@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 16:07:35 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/17 15:15:02 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/24 13:40:45 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ static bool	philo_routine_even(t_philo *philo)
 	usleep(2000);
 	while (check_flag(philo->has_died) && !check_flag(&philo->n_meals))
 	{
-		if (grab_fork(philo, philo->fork1) != true)
-			return (false);
 		if (grab_fork(philo, philo->fork2) != true)
+			return (false);
+		if (grab_fork(philo, philo->fork1) != true)
 			return (false);
 		if (eat(philo) != true)
 			return (false);
@@ -33,7 +33,8 @@ static bool	philo_routine_even(t_philo *philo)
 			return (false);
 		if (think(philo) != true)
 			return (false);
-		decrement_flag(&philo->n_meals);
+		if (decrement_flag(&philo->n_meals) != true)
+			return (func_error(philo, "mutex error\n"));
 	}
 	return (true);
 }
@@ -52,7 +53,8 @@ static bool	philo_routine_odd(t_philo *philo)
 			return (false);
 		if (think(philo) != true)
 			return (false);
-		decrement_flag(&philo->n_meals);
+		if (decrement_flag(&philo->n_meals) != true)
+			return (func_error(philo, "mutex error\n"));
 	}
 	return (true);
 }
@@ -73,6 +75,7 @@ void	*philo_routine(void *vars)
 	else
 		done_eating = philo_routine_even(philo);
 	if (done_eating)
-		decrement_flag(philo->done_eating);
+		if (decrement_flag(philo->done_eating) != true)
+			func_error(philo, "mutex error\n");
 	return (NULL);
 }
