@@ -49,8 +49,13 @@ CFLAGS = -Wall -Wextra -Werror -O2
 INC = -Iinc
 
 #------------------------------Debug
-# CFLAGS += -g -fsanitize=address
-# CFLAGS += -g -fsanitize=thread
+ifdef WITH_ADDRESS
+CFLAGS += -g -fsanitize=address
+endif
+
+ifdef WITH_THREAD
+CFLAGS += -g -fsanitize=thread
+endif
 
 #----------------------------------------Making
 all: $(NAME)
@@ -67,6 +72,13 @@ $(DIR_OBJS)%.o: %.c
 $(DIR_OBJS):
 	@mkdir -p $@
 
+#------------------------------Debug
+address: $(DIR_OBJS) $(OBJS)
+	@$(MAKE) re WITH_ADDRESS=1
+
+thread: $(DIR_OBJS) $(OBJS)
+	@$(MAKE) re WITH_THREAD=1
+
 #----------------------------------------Cleaning
 clean:
 	@rm -f $(OBJS)
@@ -76,4 +88,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re address thread
