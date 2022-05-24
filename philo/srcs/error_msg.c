@@ -6,11 +6,12 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:10:54 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/10 13:33:47 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/24 13:51:52 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include "flag_utils.h"
 #include "not_libft.h"
 #include <pthread.h>
 #include <unistd.h>
@@ -58,10 +59,24 @@ int	error_msg(const char *msg)
 	temp = add_color(RED, msg);
 	if (!temp)
 		return (2);
-	write(2, temp, ft_strlen(temp));
+	write(1, temp, ft_strlen(temp));
 	return (1);
 }
 
-// void	func_error(t_philo philo, const char *msg)
-// {
-// }
+bool	func_error(t_philo *philo, const char *msg)
+{
+	if (pthread_mutex_lock(&philo->has_died->mtx) != 0)
+		return (false);
+	if (!philo->has_died->flag)
+	{
+		error_msg(msg);
+		philo->has_died->flag = 1;
+		if (pthread_mutex_unlock(&philo->fork1->mtx) != 0)
+			return (false);
+		if (pthread_mutex_unlock(&philo->fork2->mtx) != 0)
+			return (false);
+	}
+	if (pthread_mutex_unlock(&philo->has_died->mtx) != 0)
+		return (false);
+	return (false);
+}

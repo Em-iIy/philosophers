@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 10:48:50 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/17 15:06:02 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/24 12:36:32 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,28 +84,29 @@ typedef struct s_table
 
 // ----------------------------------------Prototypes
 // ------------------------------Error exit
-int				error_msg(const char *msg);
+int		error_msg(const char *msg);
+bool	func_error(t_philo *philo, const char *msg);
 
 // ------------------------------Parsing
-t_input			parsing(int argc, char **argv);
+t_input	parsing(int argc, char **argv);
 
 // ------------------------------Init
-int				init_table(t_table *table, t_input input);
-t_flag			*init_forks(int n);
-t_philo			*init_philos(int n, t_table *table, t_input input);
+int		init_table(t_table *table, t_input input);
+t_flag	*init_forks(int n);
+t_philo	*init_philos(int n, t_table *table, t_input input);
 // --------------------Init Utils
-void			*clear_forks(t_flag *forks, int n);
+void	*clear_forks(t_flag *forks, int n);
 
 // ------------------------------Philo routine
-void			*philo_routine(void *vars);
-void			*philo_monitor(void *vars);
-void			*single_philo_monitor(void *vars);
+void	*philo_routine(void *vars);
+void	*philo_monitor(void *vars);
+void	*single_philo_monitor(void *vars);
 
 // ------------------------------Philo state
-bool			grab_fork(t_philo *philo, t_flag *fork);
-bool			eat(t_philo *philo);
-bool			philo_sleep(t_philo *philo);
-bool			think(t_philo *philo);
-bool			die(t_philo *philo);
+bool	grab_fork(t_philo *philo, t_flag *fork);
+bool	eat(t_philo *philo);
+bool	philo_sleep(t_philo *philo);
+bool	think(t_philo *philo);
+bool	die(t_philo *philo);
 
 #endif
