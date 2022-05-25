@@ -6,14 +6,13 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 13:58:01 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/04/13 15:58:58 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/25 10:19:35 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include "flag_utils.h"
 #include <stdlib.h>
-#include <pthread.h>
 
 void	*clear_forks(t_flag *forks, int n)
 {

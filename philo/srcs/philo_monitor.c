@@ -6,13 +6,12 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:52:49 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/24 12:57:41 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/25 10:18:40 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include "time_utils.h"
-#include "printing_utils.h"
 #include "flag_utils.h"
 #include <unistd.h>
 #include <pthread.h>
@@ -36,26 +35,6 @@ static bool	check_hunger(t_philo *philo, uint64_t tt_die)
 			return (false);
 	}
 	return (true);
-}
-
-void	*philo_monitor(void *vars)
-{
-	t_philo		*philo;
-	uint64_t	tt_die;
-
-	philo = (t_philo *)vars;
-	tt_die = (uint64_t) philo->tt_die;
-	while (check_flag(philo->has_died) && !check_flag(&philo->n_meals))
-	{
-		if (!check_hunger(philo, tt_die))
-		{
-			if (!die(philo))
-				return (NULL);
-			return (NULL);
-		}
-		usleep(1000);
-	}
-	return (NULL);
 }
 
 void	*single_philo_monitor(void *vars)

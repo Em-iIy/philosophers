@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 10:48:50 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/24 12:36:32 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/25 10:29:41 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,9 @@
 // #  define DEBUG(id,msg)
 // # endif
 // ----------------------------------------Includes
-# include <stddef.h>
 # include <stdint.h>
 # include <stdbool.h>
 # include <pthread.h>
-# include <stdio.h> // remove
 
 // ----------------------------------------Enums
 
@@ -94,6 +92,7 @@ t_input	parsing(int argc, char **argv);
 int		init_table(t_table *table, t_input input);
 t_flag	*init_forks(int n);
 t_philo	*init_philos(int n, t_table *table, t_input input);
+
 // --------------------Init Utils
 void	*clear_forks(t_flag *forks, int n);
 

@@ -6,12 +6,11 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:10:54 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/24 13:51:52 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/25 10:27:08 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include "flag_utils.h"
 #include "not_libft.h"
 #include <pthread.h>
 #include <unistd.h>

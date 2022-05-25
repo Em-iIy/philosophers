@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:45:48 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/24 18:40:20 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/25 10:15:06 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "time_utils.h"
 #include "flag_utils.h"
 #include <pthread.h>
+#include <stdio.h>
 
 bool	printing(t_philo *philo, int eat, const char *msg)
 {

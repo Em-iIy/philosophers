@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 12:18:15 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/24 14:23:56 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/25 10:15:31 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "flag_utils.h"
 #include <pthread.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 bool	grab_fork(t_philo *philo, t_flag *fork)
 {

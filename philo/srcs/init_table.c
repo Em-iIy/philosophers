@@ -6,36 +6,35 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:29:49 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/24 19:09:01 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/25 10:21:22 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include "flag_utils.h"
 #include "time_utils.h"
-#include <unistd.h>
 #include <pthread.h>
 
-void	*fork_status(void *vars)
-{
-	t_table	table;
+// void	*fork_status(void *vars)
+// {
+// 	t_table	table;
 
-	table = *(t_table *)vars;
-	while (1)
-	{
-		sleep(10);
-		for (int i = 0; i < table.n_philo; i++)
-		{
-			if (pthread_mutex_trylock(&table.forks[i].mtx) == 0)
-			{
-				printf("fork: %d\t %sUNLOCKED%s\n", i, GREEN, NORMAL);
-				pthread_mutex_unlock(&table.forks[i].mtx);
-			}
-			else
-				printf("fork: %d\t %sLOCKED%s\n", i, RED, NORMAL);
-		}
-	}
-}
+// 	table = *(t_table *)vars;
+// 	while (1)
+// 	{
+// 		sleep(10);
+// 		for (int i = 0; i < table.n_philo; i++)
+// 		{
+// 			if (pthread_mutex_trylock(&table.forks[i].mtx) == 0)
+// 			{
+// 				printf("fork: %d\t %sUNLOCKED%s\n", i, GREEN, NORMAL);
+// 				pthread_mutex_unlock(&table.forks[i].mtx);
+// 			}
+// 			else
+// 				printf("fork: %d\t %sLOCKED%s\n", i, RED, NORMAL);
+// 		}
+// 	}
+// }
 
 int	init_table(t_table *table, t_input input)
 {
@@ -69,9 +68,9 @@ int	init_table(t_table *table, t_input input)
 		}
 		i++;
 	}
-	usleep(1000000);
+	better_usleep(1000000);
 	pthread_mutex_lock(&table->printing.mtx);
-	// table->start_time = get_time();
+	table->start_time = get_time();
 	if (table->start_time == 0)
 	{
 		table->start_time = 1;

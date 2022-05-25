@@ -6,14 +6,13 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 16:07:35 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/24 13:40:45 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/25 10:17:57 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include "time_utils.h"
 #include "flag_utils.h"
-#include "printing_utils.h"
 #include <pthread.h>
 #include <unistd.h>
 #include <stdbool.h>

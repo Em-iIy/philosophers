@@ -6,13 +6,11 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 10:48:54 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/24 13:21:32 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/25 10:13:57 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include "not_libft.h"
-#include "time_utils.h"
 #include <stdlib.h>
 
 void	join(t_philo *threads)

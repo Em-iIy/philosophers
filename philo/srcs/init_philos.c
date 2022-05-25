@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:43:38 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/24 12:44:26 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/25 10:23:24 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "not_libft.h"
 #include "flag_utils.h"
 #include <stdlib.h>
-#include <pthread.h>
 
 static void	fill_philo(t_philo *philo, t_input input)
 {
