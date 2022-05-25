@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 12:18:15 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/25 10:15:31 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/25 18:02:06 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ bool	eat(t_philo *philo)
 	if (!printing(philo, 1, "is eating"))
 	{
 		if (pthread_mutex_unlock(&philo->printing->mtx) != 0)
+			func_error(philo, "mutex unlock error\n");
+		if (pthread_mutex_unlock(&philo->lm_flag.mtx) != 0)
 			func_error(philo, "mutex unlock error\n");
 		return (false);
 	}
