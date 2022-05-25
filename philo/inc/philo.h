@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 10:48:50 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/25 10:29:41 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/25 12:47:11 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ typedef struct s_philo
 typedef struct s_table
 {
 	t_flag		*forks;
-	t_flag		has_died;
 	t_philo		*philos;
+	t_flag		has_died;
 	t_flag		printing;
 	t_flag		done_eating;
 	uint64_t	start_time;
