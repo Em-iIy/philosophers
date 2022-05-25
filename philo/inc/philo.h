@@ -22,16 +22,11 @@
 # define CYAN "\033[0;96m"
 # define WHITE "\033[0;97m"
 # define NORMAL "\033[0m"
-// # define DEBUG(id,msg) printf("\033[0m%s:%d    \t%-17sphilo %d:\t%-40s\033[0m\n", __FILE__, __LINE__, __func__, id, msg)
-// # ifndef DEBUG
-// #  define DEBUG(id,msg)
-// # endif
+
 // ----------------------------------------Includes
 # include <stdint.h>
 # include <stdbool.h>
 # include <pthread.h>
-
-// ----------------------------------------Enums
 
 // ----------------------------------------Structs
 typedef struct s_input

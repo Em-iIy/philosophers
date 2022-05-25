@@ -14,12 +14,24 @@
 #include "not_libft.h"
 #include "flag_utils.h"
 #include <stdlib.h>
+#include <stdbool.h>
 
-static void	fill_philo(t_philo *philo, t_input input)
+static bool	fill_philo(t_philo *philo, t_input input, t_table *table)
 {
 	philo->tt_die = input.tt_die;
 	philo->tt_eat = input.tt_eat;
 	philo->tt_sleep = input.tt_sleep;
+	philo->has_died = &(table->has_died);
+	philo->printing = &(table->printing);
+	philo->done_eating = &(table->done_eating);
+	philo->start_time = &(table->start_time);
+	philo->last_meal = 0;
+	philo->lm_flag = create_flag();
+	philo->n_meals = create_flag();
+	if (philo->lm_flag.flag == 1 || philo->n_meals.flag == 1)
+		return (false);
+	philo->n_meals.flag = input.n_meals;
+	return (true);
 }
 
 t_philo	*init_philos(int n, t_table *table, t_input input)
@@ -36,20 +48,11 @@ t_philo	*init_philos(int n, t_table *table, t_input input)
 		ret[i].id = i + 1;
 		ret[i].fork1 = &(table->forks[i]);
 		ret[i].fork2 = &(table->forks[(i + 1) % n]);
-		ret[i].has_died = &(table->has_died);
-		ret[i].printing = &(table->printing);
-		ret[i].done_eating = &(table->done_eating);
-		ret[i].start_time = &(table->start_time);
-		ret[i].last_meal = 0;
-		ret[i].lm_flag = create_flag();
-		ret[i].n_meals = create_flag();
-		if (ret[i].lm_flag.flag == 1 || ret[i].n_meals.flag == 1)
+		if (fill_philo(&ret[i], input, table) != true)
 		{
 			free(ret);
 			return (NULL);
 		}
-		ret[i].n_meals.flag = input.n_meals;
-		fill_philo(&ret[i], input);
 		i++;
 	}
 	return (ret);
