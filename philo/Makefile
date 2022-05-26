@@ -44,8 +44,7 @@ OBJS = $(FILES_OBJS:%=$(DIR_OBJS)%)
 
 #----------------------------------------Flags
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -O2
-# CFLAGS += -lpthread
+CFLAGS = -Wall -Wextra -Werror
 INC = -Iinc
 
 #------------------------------Debug
@@ -59,7 +58,6 @@ endif
 
 #----------------------------------------Making
 all: $(NAME)
-	@echo "$(BLUE)----------------------------------------------------------------------------------------------------------------------------------------------------------------------$(NORMAL)"
 
 $(NAME): $(DIR_OBJS) $(OBJS)
 	@$(CC) $(CFLAGS) $(INC) $(OBJS) -o $(NAME)
