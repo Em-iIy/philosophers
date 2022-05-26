@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 12:18:15 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/25 18:02:06 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/26 17:23:29 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ bool	think(t_philo *philo)
 
 bool	die(t_philo *philo)
 {
+	if (pthread_mutex_lock(&philo->printing->mtx) != 0)
+		error_msg("%smutex lock error%s\n");
 	if (pthread_mutex_lock(&philo->has_died->mtx) != 0)
 		error_msg("%smutex lock error%s\n");
 	if (!philo->has_died->flag)
@@ -107,6 +109,8 @@ bool	die(t_philo *philo)
 			error_msg("%smutex unlock error%s\n");
 	}
 	if (pthread_mutex_unlock(&philo->has_died->mtx) != 0)
+		error_msg("%smutex unlock error%s\n");
+	if (pthread_mutex_unlock(&philo->printing->mtx) != 0)
 		error_msg("%smutex unlock error%s\n");
 	return (true);
 }
