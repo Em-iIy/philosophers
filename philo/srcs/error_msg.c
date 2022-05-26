@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 15:10:54 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/25 10:27:08 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/26 12:03:35 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,17 @@ int	error_msg(const char *msg)
 bool	func_error(t_philo *philo, const char *msg)
 {
 	if (pthread_mutex_lock(&philo->has_died->mtx) != 0)
-		return (false);
+		error_msg("func_error mutex lock error!?");
 	if (!philo->has_died->flag)
 	{
 		error_msg(msg);
 		philo->has_died->flag = 1;
 		if (pthread_mutex_unlock(&philo->fork1->mtx) != 0)
-			return (false);
+			error_msg("func_error mutex unlock error!?");
 		if (pthread_mutex_unlock(&philo->fork2->mtx) != 0)
-			return (false);
+			error_msg("func_error mutex unlock error!?");
 	}
 	if (pthread_mutex_unlock(&philo->has_died->mtx) != 0)
-		return (false);
+		error_msg("func_error mutex unlock error!?");
 	return (false);
 }
