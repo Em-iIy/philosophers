@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 16:16:31 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/17 14:38:05 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/26 13:13:48 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ t_flag	create_flag(void)
 void	destroy_flag(t_flag *flag)
 {
 	if (flag->flag == 0)
-		pthread_mutex_destroy(&(flag->mtx));
+		if (pthread_mutex_destroy(&(flag->mtx)) != 0)
+			error_msg("mutex destroy error\n");
 }
 
 bool	check_flag(t_flag *flag)
@@ -35,35 +36,34 @@ bool	check_flag(t_flag *flag)
 	bool	ret;
 
 	if (pthread_mutex_lock(&flag->mtx) != 0)
+	{
+		error_msg("mutex lock error\n");
 		return (false);
+	}
 	if (!flag->flag)
 		ret = true;
 	else
 		ret = false;
 	if (pthread_mutex_unlock(&flag->mtx) != 0)
+	{
+		error_msg("mutex unlock error\n");
 		return (false);
+	}
 	return (ret);
-}
-
-bool	flip_flag(t_flag *flag)
-{
-	if (pthread_mutex_lock(&flag->mtx) != 0)
-		return (false);
-	if (!flag->flag)
-		flag->flag = 1;
-	else
-		flag->flag = 0;
-	if (pthread_mutex_unlock(&flag->mtx) != 0)
-		return (false);
-	return (true);
 }
 
 bool	decrement_flag(t_flag *flag)
 {
 	if (pthread_mutex_lock(&flag->mtx) != 0)
+	{
+		error_msg("mutex lock error\n");
 		return (false);
+	}
 	flag->flag--;
 	if (pthread_mutex_unlock(&flag->mtx) != 0)
+	{
+		error_msg("mutex unlock error\n");
 		return (false);
+	}
 	return (true);
 }
