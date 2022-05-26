@@ -6,7 +6,7 @@
 /*   By: gwinnink <gwinnink@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 13:58:01 by gwinnink          #+#    #+#             */
-/*   Updated: 2022/05/25 13:26:06 by gwinnink         ###   ########.fr       */
+/*   Updated: 2022/05/26 17:15:08 by gwinnink         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	*clear_forks(t_flag *forks, int n)
 	int	i;
 
 	i = 0;
-	while (forks[i].flag != 1 && i < n)
+	while (i < n && forks[i].flag != 1)
 	{
 		destroy_flag(&forks[i]);
 		i++;
